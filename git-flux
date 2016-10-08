@@ -7,6 +7,7 @@ case ${1} in
             git fetch upstream develop &&
                 git checkout upstream/develop &&
                 git checkout -b issues/$(printf %05d ${3})/$(uuidgen) &&
+                git push origin $(git rev-parse --abbrev-ref HEAD) &&
                 true
         ;;
         rebase)
@@ -22,6 +23,7 @@ case ${1} in
                 git checkout -b merge-requests/${ISSUE}/$(date +%Y%b%d%H%M) &&
                 git reset --soft upstream/develop &&
                 git commit &&
+                git push origin $(git rev-parse --abbrev-ref HEAD) &&
                 true
     esac
     ;;
