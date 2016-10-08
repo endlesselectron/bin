@@ -4,7 +4,7 @@ case ${1} in
     issue)
     case ${2} in
         start)
-            git fetch upstream master &&
+            git fetch upstream develop &&
                 git checkout upstream/develop &&
                 git checkout -b issues/$(printf %05d ${3})/$(uuidgen) &&
                 true
