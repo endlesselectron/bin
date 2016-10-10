@@ -1,29 +1,45 @@
 #!/bin/bash
 
+function issue_start() {
+    git fetch upstream develop &&
+        git checkout upstream/develop &&
+        git checkout -b issues/$(printf %05d ${1})/$(uuidgen) &&
+        git push origin $(git rev-parse --abbrev-ref HEAD) &&
+        true
+}
+
+function issue_rebase() {
+    git fetch upstream develop &&
+        ISSUE=$(git rev-parse --abbrev-ref HEAD | sed -e "s#^issues\/##" | sed -e "s#\/.*\$##") &&
+        git checkout -b issues/${ISSUE}/$(uuidgen) &&
+        git rebase upstream/develop &&
+        git push origin $(git rev-parse --abbrev-ref HEAD)
+        true
+}
+
+function issue_finish() {
+    issue_rebase &&
+        ISSUE=$(git rev-parse --abbrev-ref HEAD | sed -e "s#^issues\/##" | sed -e "s#\/.*\$##") &&
+        git checkout -b merge-requests/${ISSUE}/$(date +%Y%b%d%H%M) &&
+        git reset --soft upstream/develop &&
+        git commit &&
+        git push origin $(git rev-parse --abbrev-ref HEAD) &&
+        true
+}
+
 case ${1} in
     issue)
     case ${2} in
         start)
-            git fetch upstream develop &&
-                git checkout upstream/develop &&
-                git checkout -b issues/$(printf %05d ${3})/$(uuidgen) &&
-                git push origin $(git rev-parse --abbrev-ref HEAD) &&
+            issue_start ${3} &&
                 true
         ;;
         rebase)
-            git fetch upstream develop &&
-                ISSUE=$(git rev-parse --abbrev-ref HEAD | sed -e "s#^issues\/##" | sed -e "s#\/.*\$##") &&
-                git checkout -b issues/${ISSUE}/$(uuidgen) &&
-                git rebase upstream/develop &&
-                git push origin $(git rev-parse --abbrev-ref HEAD)
+            issue_rebase &&
                 true
         ;;
         finish)
-            ISSUE=$(git rev-parse --abbrev-ref HEAD | sed -e "s#^issues\/##" | sed -e "s#\/.*\$##") &&
-                git checkout -b merge-requests/${ISSUE}/$(date +%Y%b%d%H%M) &&
-                git reset --soft upstream/develop &&
-                git commit &&
-                git push origin $(git rev-parse --abbrev-ref HEAD) &&
+            issue_finish &&
                 true
     esac
     ;;
