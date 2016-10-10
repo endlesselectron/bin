@@ -7,10 +7,10 @@ docker run --interactive --tty --rm \
     --env PROJECT_ORIGIN=git@github.com:tidyrailroad/cloud9.git \
     --env GIT_EMAIL=emory.merryman@gmail.com \
     --env GIT_NAME="Emory Merryman" \
-    --env DISPLAY \
+    --env DISPLAY=10.0.2.15:0 \
     --env DOCKER_API_VERSION=1.22 \
     --volume dot_ssh:/root/.ssh:ro \
     --volume /var/run/docker.sock:/var/run/docker.sock:ro \
-    --volume /tmp/.X11-unix \
+    --volume /tmp/.X11-unix/X0:/tmp/.X11-unix/X0:rw \
     --publish-all \
     emorymerryman/cloud9:2.1.3
