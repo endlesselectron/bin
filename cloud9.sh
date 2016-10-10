@@ -8,9 +8,9 @@ docker run --interactive --tty --rm \
     --env GIT_EMAIL=emory.merryman@gmail.com \
     --env GIT_NAME="Emory Merryman" \
     --env DISPLAY \
+    --env DOCKER_API_VERSION=1.22 \
     --volume dot_ssh:/root/.ssh:ro \
     --volume /var/run/docker.sock:/var/run/docker.sock:ro \
-    --volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
+    --volume /tmp/.X11-unix \
     --publish-all \
-    --net=host \
     emorymerryman/cloud9:2.1.3
