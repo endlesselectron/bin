@@ -2,7 +2,7 @@
 
 docker run --interactive --tty --rm \
     --env BIN_URL=git@github.com:endlesselectron/bin.git \
-    --env BIN_TAG=0.0.0 \
+    --env BIN_TAG=${3} \
     --env PROJECT_UPSTREAM=${1} \
     --env PROJECT_ORIGIN=${2} \
     --env GIT_EMAIL=emory.merryman@gmail.com \
