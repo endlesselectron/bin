@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker run -it --rm --env DISPLAY=:0 --net=host --privileged emacs &&
+docker run -it --rm --env DISPLAY --net=host --privileged emacs &&
     true
