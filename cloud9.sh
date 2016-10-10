@@ -3,8 +3,8 @@
 docker run --interactive --tty --rm \
     --env BIN_URL=git@github.com:endlesselectron/bin.git \
     --env BIN_TAG=0.0.0 \
-    --env PROJECT_UPSTREAM=git@github.com:tidyrailroad/emacs.git \
-    --env PROJECT_ORIGIN=git@github.com:tidyrailroad/emacs.git \
+    --env PROJECT_UPSTREAM=${1} \
+    --env PROJECT_ORIGIN=${2} \
     --env GIT_EMAIL=emory.merryman@gmail.com \
     --env GIT_NAME="Emory Merryman" \
     --volume dot_ssh:/root/.ssh \
