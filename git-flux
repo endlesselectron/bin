@@ -25,6 +25,23 @@ case ${1} in
                 git commit &&
                 git push origin $(git rev-parse --abbrev-ref HEAD) &&
                 true
+        ;;
+    esac
+    ;;
+    project)
+    case ${2} in
+        start)
+            echo ".c9" >> .gitignore &&
+            git add .gitignore &&
+            git commit -am "init" &&
+            git push origin master &&
+            git checkout -b develop &&
+            git push origin develop &&
+            git checkout -b scratch/$(uuidgen) &&
+            git branch -D master &&
+            git branch -D develop &&
+            true
+        ;;
     esac
     ;;
 esac
