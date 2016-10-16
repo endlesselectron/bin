@@ -7,6 +7,7 @@ docker run --interactive --tty --rm \
     --env PROJECT_ORIGIN=${2} \
     --env GIT_EMAIL=emory.merryman@gmail.com \
     --env GIT_NAME="Emory Merryman" \
+    --env UUID=$(uuidgen) \
     --volume dot_ssh:/root/.ssh \
     --volume /var/run/docker.sock:/var/run/docker.sock:ro \
     --privileged \
