@@ -4,8 +4,8 @@ docker run \
     --interactive \
     --tty \
     --rm \
-    --volume ad298239361c0e5ad01bcd4d9946790bb0205aaccbc2b07441004ba9c281aa6d:/root/workspace \
-    --workdir /root/workspace/bin \
+    --volume $(docker inspect $(self.sh) | grep -B 2 '"Destination": "/root/workspace",' | head --lines 1 | cut --fields 4 --delimiter '"'):/root/workspace \
+    --workdir ${BASE_PROC} \
     --privileged \
     --volume /tmp/.X11-unix --env DISPLAY \
     --net host \
