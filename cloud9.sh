@@ -14,4 +14,4 @@ docker run --interactive --tty --rm \
     --volume /tmp/.X11 \
     --publish-all \
     --env DOCKER_API_VERSION=1.22 \
-    emorymerryman/cloud9:2.1.3
+    emorymerryman/cloud9:2.2.0
