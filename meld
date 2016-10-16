@@ -1,0 +1,10 @@
+#!/bin/sh
+
+docker ps -q | while read CID
+do
+    docker inspect ${CID} | grep ${UUID} &&
+        docker inspect ${CID} | grep '"Destination": "/root/workspace"' &&
+        docker run --interactive --tty --rm --env DISPLAY --net host --privileged emorymerryman/meld:0.0.2 &&
+        true
+done &&
+    true
