@@ -1,8 +1,12 @@
 #!/bin/sh
 
-docker run --interactive --tty --rm \
+docker \
+    run \
+    --interactive \
+    --tty \
+    --detach \
     --env BIN_URL=git@github.com:endlesselectron/bin.git \
-    --env BIN_TAG=${3} \
+    --env BIN_TAG=2.3.0 \
     --env PROJECT_UPSTREAM=${1} \
     --env PROJECT_ORIGIN=${2} \
     --env GIT_EMAIL=emory.merryman@gmail.com \
@@ -15,4 +19,4 @@ docker run --interactive --tty --rm \
     --volume /tmp/.X11 \
     --publish-all \
     --env DOCKER_API_VERSION=1.22 \
-    emorymerryman/cloud9:2.2.1
+    emorymerryman/cloud9:2.3.0
