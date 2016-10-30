@@ -4,8 +4,8 @@ docker \
     run \
     --interactive \
     --tty \
-    --volume \
-    --workdir \
+    --volume $(workspace):/usr/local/src \
+    --workdir /usr/local/src/$(basename $(pwd)) \
     emorymerryman/git-flux:0.0.1 \
     ${@} &&
     true
