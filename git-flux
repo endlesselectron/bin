@@ -1,47 +1,11 @@
 #!/bin/bash
 
-case ${1} in
-    issue)
-    case ${2} in
-        start)
-            git fetch upstream develop &&
-                git checkout upstream/develop &&
-                git checkout -b issues/$(printf %05d ${3})/$(uuidgen) &&
-                git push origin $(git rev-parse --abbrev-ref HEAD) &&
-                true
-        ;;
-        rebase)
-            git fetch upstream develop &&
-                ISSUE=$(git rev-parse --abbrev-ref HEAD | sed -e "s#^issues\/##" | sed -e "s#\/.*\$##") &&
-                git checkout -b issues/${ISSUE}/$(uuidgen) &&
-                git rebase upstream/develop &&
-                git push origin $(git rev-parse --abbrev-ref HEAD)
-                true
-        ;;
-        finish)
-            ISSUE=$(git rev-parse --abbrev-ref HEAD | sed -e "s#^issues\/##" | sed -e "s#\/.*\$##") &&
-                git checkout -b merge-requests/${ISSUE}/$(date +%Y%b%d%H%M) &&
-                git reset --soft upstream/develop &&
-                git commit &&
-                git push origin $(git rev-parse --abbrev-ref HEAD) &&
-                true
-        ;;
-    esac
-    ;;
-    project)
-    case ${2} in
-        start)
-            echo ".c9" >> .gitignore &&
-            git add .gitignore &&
-            git commit -am "init" &&
-            git push origin master &&
-            git checkout -b develop &&
-            git push origin develop &&
-            git checkout -b scratch/$(uuidgen) &&
-            git branch -D master &&
-            git branch -D develop &&
-            true
-        ;;
-    esac
-    ;;
-esac
+docker \
+    run \
+    --interactive \
+    --tty \
+    --volume \
+    --workdir \
+    emorymerryman/git-flux:0.0.1 \
+    ${@} &&
+    true
