@@ -6,7 +6,7 @@ docker \
     --tty \
     --detach \
     --env BIN_URL=git@github.com:endlesselectron/bin.git \
-    --env BIN_TAG=2.3.0 \
+    --env BIN_TAG=2.5.0 \
     --env PROJECT_UPSTREAM=${1} \
     --env PROJECT_ORIGIN=${2} \
     --env GIT_EMAIL=emory.merryman@gmail.com \
@@ -19,4 +19,4 @@ docker \
     --volume /tmp/.X11 \
     --publish-all \
     --env DOCKER_API_VERSION=1.22 \
-    emorymerryman/cloud9:2.3.0
+    emorymerryman/cloud9:2.3.1
