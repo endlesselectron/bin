@@ -23,7 +23,6 @@ docker \
     --privileged \
     --volume /var/run/docker.sock:/var/run/docker.sock \
     --publish-all \
-    emorymerryman/cloud9:${COMMIT_ID} &&
+    emorymerryman/cloud9:3.0.0 &&
     docker ps --latest &&
-    echo 3.0.0 &&
     true
