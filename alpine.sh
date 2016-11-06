@@ -25,5 +25,5 @@ docker \
     --publish-all \
     emorymerryman/cloud9:${COMMIT_ID} &&
     docker ps --latest &&
-    echo ${COMMIT_ID} &&
+    echo 3.0.0 &&
     true
