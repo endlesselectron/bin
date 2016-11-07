@@ -18,7 +18,7 @@ docker \
     --tty \
     --detach \
     --env PROJECT_NAME="alpine" \
-    --env PROJECT_COMMAND="docker exec --interactive --tty $(docker ps -q --latest) sh -c \"cd /root && sh\"" \
+    --env PROJECT_COMMAND="docker exec --interactive --tty $(docker ps -q --latest) sh -c \"cd /usr/local/src && sh\"" \
     --volume dot_ssh:/workspace \
     --privileged \
     --volume /var/run/docker.sock:/var/run/docker.sock \
