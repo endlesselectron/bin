@@ -10,6 +10,7 @@ docker \
     --net host \
     --env DISPLAY \
     --volume /tmp/.X11 \
+    --volume ${1}:/usr/local/src \
     alpine:3.4 sh &&
     docker \
     run \
