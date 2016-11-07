@@ -10,6 +10,7 @@ docker \
     --net host \
     --env DISPLAY \
     --volume /tmp/.X11 \
+    --volume /var/run/docker.sock:/var/run/docker.sock:ro \
     --volume ${1}:/usr/local/src \
     alpine:3.4 sh &&
     docker \
@@ -21,7 +22,7 @@ docker \
     --env PROJECT_COMMAND="docker exec --interactive --tty $(docker ps -q --latest) sh -c \"cd /usr/local/src && sh\"" \
     --volume dot_ssh:/workspace \
     --privileged \
-    --volume /var/run/docker.sock:/var/run/docker.sock \
+    --volume /var/run/docker.sock:/var/run/docker.sock:ro \
     --publish-all \
     emorymerryman/cloud9:3.0.0 &&
     docker ps --latest &&
