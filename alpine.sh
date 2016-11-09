@@ -20,7 +20,7 @@ docker \
     --detach \
     --env PROJECT_NAME="alpine" \
     --env PROJECT_COMMAND="docker exec --interactive --tty $(docker ps -q --latest) sh -c \"cd /usr/local/src && sh\"" \
-    --volume ${1}:/usr/local/src/${PROJECT_NAME} \
+    --volume ${1}:/usr/local/src/alpine \
     --privileged \
     --volume /var/run/docker.sock:/var/run/docker.sock:ro \
     --publish-all \
