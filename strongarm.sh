@@ -19,9 +19,9 @@ docker \
     --interactive \
     --tty \
     --detach \
-    --env PROJECT_NAME="alpine" \
+    --env PROJECT_NAME="${1}" \
     --env PROJECT_COMMAND="docker exec --interactive --tty $(docker ps -q --latest) bash" \
-    --volume ${1}:/usr/local/src/alpine \
+    --volume $(docker inspect --format '{{ range .Mounts }}{{ if eq .Destination "/usr/local/src" }}{{ .Name }}{{ end }}{{ end }}' $(docker ps -q --latest)):/usr/local/src/${1} \
     --privileged \
     --volume /var/run/docker.sock:/var/run/docker.sock:ro \
     --publish-all \
