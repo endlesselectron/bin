@@ -11,9 +11,10 @@ docker \
     --env DISPLAY \
     --volume /tmp/.X11 \
     --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+    --volume ${HOME}/.bash_profile:/root/.bash_profile \
     --volume ${HOME}/.ssh:/root/.ssh \
     --volume ${HOME}/bin:/root/bin \
-    emorymerryman/strongarm:0.0.3 &&
+    emorymerryman/strongarm:0.0.4 &&
     docker \
     run \
     --interactive \
@@ -21,10 +22,12 @@ docker \
     --detach \
     --env PROJECT_NAME="${1}" \
     --env PROJECT_COMMAND="docker exec --interactive --tty $(docker ps -q --latest) bash" \
+    --env GIT_NAME="Emory Merryman"
+    --env GIT_EMAIL="emory.merryman@gmail.com"
     --volume $(docker inspect --format '{{ range .Mounts }}{{ if eq .Destination "/usr/local/src" }}{{ .Name }}{{ end }}{{ end }}' $(docker ps -q --latest)):/usr/local/src/${1} \
     --privileged \
     --volume /var/run/docker.sock:/var/run/docker.sock:ro \
     --publish-all \
-    emorymerryman/cloud9:3.0.1 &&
+    emorymerryman/cloud9:3.0.2 &&
     docker ps --latest &&
     true
