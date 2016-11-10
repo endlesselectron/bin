@@ -14,7 +14,7 @@ docker \
     --volume ${HOME}/.bash_profile:/root/.bash_profile \
     --volume ${HOME}/.ssh:/root/.ssh \
     --volume ${HOME}/bin:/root/bin \
-    emorymerryman/strongarm:0.0.4 &&
+    emorymerryman/strongarm:0.0.6 &&
     docker \
     run \
     --interactive \
