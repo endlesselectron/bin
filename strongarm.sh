@@ -13,7 +13,7 @@ docker \
     --volume /var/run/docker.sock:/var/run/docker.sock:ro \
     --volume ${HOME}/.ssh:/root/.ssh \
     --volume ${HOME}/bin:/root/bin \
-    emorymerryman/strongarm:0.0.2 &&
+    emorymerryman/strongarm:0.0.3 &&
     docker \
     run \
     --interactive \
@@ -25,6 +25,6 @@ docker \
     --privileged \
     --volume /var/run/docker.sock:/var/run/docker.sock:ro \
     --publish-all \
-    emorymerryman/cloud9:3.0.0 &&
+    emorymerryman/cloud9:3.0.1 &&
     docker ps --latest &&
     true
