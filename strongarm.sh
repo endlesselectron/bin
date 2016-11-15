@@ -14,7 +14,9 @@ docker \
     --volume ${HOME}/.bash_profile:/root/.bash_profile \
     --volume ${HOME}/.ssh:/root/.ssh \
     --volume ${HOME}/bin:/root/bin \
-    emorymerryman/strongarm:0.0.6 &&
+    --env GIT_NAME="Emory Merryman"
+    --env GIT_EMAIL="emory.merryman@gmail.com"
+    emorymerryman/strongarm:0.0.7 &&
     docker \
     run \
     --interactive \
@@ -22,8 +24,6 @@ docker \
     --detach \
     --env PROJECT_NAME="${1}" \
     --env PROJECT_COMMAND="docker exec --interactive --tty $(docker ps -q --latest) bash" \
-    --env GIT_NAME="Emory Merryman"
-    --env GIT_EMAIL="emory.merryman@gmail.com"
     --volume $(docker inspect --format '{{ range .Mounts }}{{ if eq .Destination "/usr/local/src" }}{{ .Name }}{{ end }}{{ end }}' $(docker ps -q --latest)):/usr/local/src/${1} \
     --privileged \
     --volume /var/run/docker.sock:/var/run/docker.sock:ro \
