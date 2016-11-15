@@ -14,8 +14,8 @@ docker \
     --volume ${HOME}/.bash_profile:/root/.bash_profile \
     --volume ${HOME}/.ssh:/root/.ssh \
     --volume ${HOME}/bin:/root/bin \
-    --env GIT_NAME="Emory Merryman"
-    --env GIT_EMAIL="emory.merryman@gmail.com"
+    --env GIT_NAME="Emory Merryman" \
+    --env GIT_EMAIL="emory.merryman@gmail.com" \
     emorymerryman/strongarm:0.0.7 &&
     docker \
     run \
