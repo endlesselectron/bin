@@ -21,9 +21,9 @@ docker \
        --net host \
        --workdir /workspace \
        --env DISPLAY \
-       --volume ${HOME}/.ssh:/root/.ssh:ro \
-       --volume ${HOME}/bin:/root/bin:ro \
-       --volume ${HOME}/.bash_profile:/root/.bash_profile:ro \
+       --volume /home/vagrant/.ssh:/root/.ssh:ro \
+       --volume /home/vagrant/bin:/root/bin:ro \
+       --volume /home/vagrant/.bash_profile:/root/.bash_profile:ro \
        emorymerryman/strongarm:0.1.1 \
        &&
        echo \${HOME}/bin/shell.sh >> /etc/shells &&
