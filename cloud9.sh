@@ -26,7 +26,7 @@ docker \
        --volume /home/vagrant/.bash_profile:/root/.bash_profile:ro \
        --env GIT_EMAIL="emory.merryman@gmail.com" \
        --env GIT_NAME="Emory Merryman" \
-       emorymerryman/strongarm:0.1.1 \
+       emorymerryman/strongarm:0.1.2 \
        &&
        echo \${HOME}/bin/shell.sh >> /etc/shells &&
        chsh --shell \${HOME}/bin/shell.sh &&
