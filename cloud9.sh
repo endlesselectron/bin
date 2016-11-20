@@ -34,7 +34,7 @@ EOF
     (cat <<EOF
 #!/bin/sh
 
-docker exec --interactive --tty \$(cat /root/cid) bash --login &&
+docker exec --interactive --tty \$(cat /root/cid) env CONTAINER_ID=$(cat /root/cid) bash --login &&
        true
 EOF
     ) | volume-tee.sh ${BIN_VOLUME} shell.sh &&
