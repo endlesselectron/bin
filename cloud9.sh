@@ -36,9 +36,9 @@ EOF
 	--expose 8181 \
 	--publish 127.0.0.1:8181:8181 \
 	--volume ${INIT_VOLUME}:/init:ro \
+	--net host \
 	emorymerryman/cloud9:4.0.7 \
-	--listen 0.0.0.0 \
-	--auth user:password \
+	--listen 127.0.0.1 \
 	-w /workspace \
 	&&
     true
