@@ -34,7 +34,7 @@ EOF
     (cat > ${TEMP_BIN}/shell.sh <<EOF
 #!/bin/sh
 
-docker exec --interactive --tty \$(cat /root/cid) sh &&
+docker exec --interactive --tty \$(cat /root/cid) bash &&
        true
 EOF
     ) &&
