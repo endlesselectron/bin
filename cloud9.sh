@@ -23,7 +23,8 @@ docker \
        --env DISPLAY \
        --volume ${HOME}/.ssh:/root/.ssh:ro \
        --volume ${HOME}/bin:/root/bin:ro \
-       emorymerryman/strongarm:0.0.7 \
+       --volume ${HOME}/.bash_profile:/root/.bash_profile:ro \
+       emorymerryman/strongarm:0.1.1 \
        &&
        echo \${HOME}/bin/shell.sh >> /etc/shells &&
        chsh --shell \${HOME}/bin/shell.sh &&
