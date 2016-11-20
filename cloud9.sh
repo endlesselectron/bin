@@ -22,7 +22,6 @@ docker \
        --workdir /workspace \
        --env DISPLAY \
        emorymerryman/strongarm:0.0.7 \
-       sh \
        &&
        echo \${HOME}/bin/shell.sh >> /etc/shells &&
        chsh --shell \${HOME}/bin/shell.sh &&
