@@ -21,7 +21,7 @@ docker \
        --net host \
        --workdir /workspace \
        --env DISPLAY \
-       alpine:3.4 \
+       emorymerryman/strongarm:0.0.7 \
        sh \
        &&
        echo \${HOME}/bin/shell.sh >> /etc/shells &&
