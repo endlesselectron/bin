@@ -1,11 +1,9 @@
 #!/bin/sh
 
-TEMP_INIT=$(mktemp -d) &&
-    TEMP_BIN=$(mktemp -d) &&
-    WORKSPACE_VOLUME=$(docker volume create) &&
+WORKSPACE_VOLUME=$(docker volume create) &&
     INIT_VOLUME=$(docker volume create) &&
     BIN_VOLUME=$(docker volume create) &&
-    (cat > ${TEMP_INIT}/init.sh <<EOF
+    (cat <<EOF
 #!/bin/sh
 
 docker \
@@ -32,14 +30,14 @@ docker \
        chsh --shell \${HOME}/bin/shell.sh &&
        true
 EOF
-    ) &&
-    (cat > ${TEMP_BIN}/shell.sh <<EOF
+    ) | volume-tee.sh ${INIT_VOLUME} init.sh &&
+    (cat <<EOF
 #!/bin/sh
 
 docker exec --interactive --tty \$(cat /root/cid) bash --login &&
        true
 EOF
-    ) &&
+    ) | volume-tee.sh ${BIN_VOLUME} shell.sh &&
     chmod 0500 ${TEMP_BIN}/shell.sh &&
     docker run --interactive --tty --rm --volume ${TEMP_INIT}:/input:ro --volume ${INIT_VOLUME}:/output alpine:3.4 cp --recursive /input/. /output &&
     docker run --interactive --tty --rm --volume ${TEMP_BIN}:/input:ro --volume ${BIN_VOLUME}:/output alpine:3.4 cp --recursive /input/. /output &&
