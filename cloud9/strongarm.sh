@@ -1,13 +1,14 @@
 #!/bin/sh
 
 PROJECT_NAME=strongarm &&
-    SA_INIT=$(mktemp -d) &&
+    PROJECT_INIT=$(mktemp -d) &&
     TEMP_INIT=$(mktemp -d) &&
     TEMP_BIN=$(mktemp -d) &&
+    PROJECT_VOLUME=$(docker volume create) &&
     WORKSPACE_VOLUME=$(docker volume create) &&
     INIT_VOLUME=$(docker volume create) &&
     BIN_VOLUME=$(docker volume create) &&
-    (cat > ${SA_INIT}/init.sh <<EOF
+    (cat > ${PROJECT_INIT}/init.sh <<EOF
 #!/bin/sh
 
 git -C /workspace/${PROJECT_NAME} init &&
@@ -38,6 +39,7 @@ docker \
        --volume /home/vagrant/.ssh:/root/.ssh:ro \
        --volume /home/vagrant/bin:/root/bin:ro \
        --volume /home/vagrant/.bash_profile:/root/.bash_profile:ro \
+       --volume ${PROJECT_VOLUME}:/init:ro \
        --env GIT_EMAIL="emory.merryman@gmail.com" \
        --env GIT_NAME="Emory Merryman" \
        emorymerryman/strongarm:0.1.2 \
@@ -55,6 +57,8 @@ docker exec --interactive --tty \$(cat /root/cid) bash --login &&
 EOF
     ) &&
     chmod 0500 ${TEMP_BIN}/shell.sh &&
+    echo docker run --interactive --tty --rm --volume ${PROJECT_INIT}:/input:ro --volume ${PROJECT_VOLUME}:/output alpine:3.4 cp --recursive /input/. /output &&
+    docker run --interactive --tty --rm --volume ${PROJECT_INIT}:/input:ro --volume ${PROJECT_VOLUME}:/output alpine:3.4 cp --recursive /input/. /output &&
     docker run --interactive --tty --rm --volume ${TEMP_INIT}:/input:ro --volume ${INIT_VOLUME}:/output alpine:3.4 cp --recursive /input/. /output &&
     docker run --interactive --tty --rm --volume ${TEMP_BIN}:/input:ro --volume ${BIN_VOLUME}:/output alpine:3.4 cp --recursive /input/. /output &&
     docker \
