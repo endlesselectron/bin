@@ -1,4 +1,5 @@
 #!/bin/sh
 
 git checkout -b scratch/$(uuidgen) &&
+    post-commit.sh &&
     true
