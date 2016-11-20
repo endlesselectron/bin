@@ -44,6 +44,7 @@ EOF
 	--volume ${BIN_VOLUME}:/root/bin:ro \
 	--interactive \
 	--tty \
+	--detach \
 	--volume /var/run/docker.sock:/var/run/docker.sock:ro \
 	--privileged \
 	--volume ${WORKSPACE_VOLUME}:/workspace \
