@@ -22,6 +22,7 @@ docker \
        --workdir /workspace \
        --env DISPLAY \
        --volume ${HOME}/.ssh:/root/.ssh:ro \
+       --volume ${HOME}/bin:/root/bin:ro \
        emorymerryman/strongarm:0.0.7 \
        &&
        echo \${HOME}/bin/shell.sh >> /etc/shells &&
