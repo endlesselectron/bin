@@ -17,6 +17,14 @@ scratch(){
             git rebase upstream/develop &&
             true
     } &&
+    reset(){
+        check &&
+            rebase &&
+            OLD_COMMIT=$(git cherry upstream/develop | head --lines 1 | cut --fields 2 --delimiter " ") &&
+            git reset --soft upstream/develop &&
+            git commit --reuse-message ${OLD_COMMIT} &&
+            true
+    }
     case ${1} in
         scratch)
             scratch &&
