@@ -13,7 +13,7 @@ scratch(){
     rebase(){
         check &&
             git fetch upstream develop &&
-            git scratch &&
+            scratch &&
             git rebase upstream/develop &&
             true
     } &&
@@ -23,6 +23,12 @@ scratch(){
             OLD_COMMIT=$(git cherry upstream/develop | head --lines 1 | cut --fields 2 --delimiter " ") &&
             git reset --soft upstream/develop &&
             git commit --reuse-message ${OLD_COMMIT} &&
+            true
+    } &&
+    restart(){
+        git fetch upstream develop &&
+            git checkout upstream/develop &&
+            scratch &&
             true
     }
     case ${1} in
@@ -40,6 +46,10 @@ scratch(){
         ;;
         reset)
             reset &&
+                true
+        ;;
+        restart)
+            restart &&
                 true
         ;;
     esac &&
