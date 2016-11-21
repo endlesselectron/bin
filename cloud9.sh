@@ -6,30 +6,36 @@ do
         --project-name)
             PROJECT_NAME=${2} &&
             shift &&
+            shift &&
             true
         ;;
         --email)
             EMAIL=${2} &&
+            shift &&
             shift &&
             true
         ;;
         --name)
             NAME=${2} &&
             shift &&
+            shift &&
             true
         ;;
         --upstream)
             UPSTREAM=${2} &&
+            shift &&
             shift &&
             true
         ;;
         --origin)
             ORIGIN=${2} &&
             shift &&
+            shift &&
             true
         ;;
         --parent)
             PARENT=${2} &&
+            shift &&
             shift &&
             true
         ;;
@@ -59,7 +65,8 @@ docker \
        --volume /home/vagrant/.ssh:/root/.ssh:ro \
        --volume /home/vagrant/bin:/root/bin:ro \
        --volume /home/vagrant/.bash_profile:/root/.bash_profile:ro \
-       emorymerryman/strongarm:0.1.2 \
+       --volume ${PROJECT_VOLUME}:/init \
+       emorymerryman/strongarm:0.1.3 \
        &&
        echo \${HOME}/bin/shell.sh >> /etc/shells &&
        chsh --shell \${HOME}/bin/shell.sh &&
@@ -79,12 +86,12 @@ EOF
 
 git -C /workspace/${PROJECT_NAME} init &&
     ln --symbolic --force /root/bin/post-commit.sh /workspace/${PROJECT_NAME}/.git/hooks/post-commit &&
-    ( [ ! -z "${EMAIL}" ] || git -C /workspace/${PROJECT_NAME} config user.email "${EMAIL}" ) &&
-    ( [ ! -z "${NAME}" ] || git -C /workspace/${PROJECT_NAME} config user.name "${NAME}" ) &&
-    ( [ ! -z "${UPSTREAM}" ] || git -C /workspace/${PROJECT_NAME} remote add upstream ${UPSTREAM} ) &&
-    ( [ ! -z "${ORIGIN}" ] || git -C /workspace/${PROJECT_NAME} remote add origin ${ORIGIN} ) &&
-    ( [ ! -z "${PARENT}" ] || git -C /workspace/${PROJECT_NAME} fetch upstream ${PARENT} && git -C /workspace/${PROJECT_NAME} checkout upstream/${PARENT}  ) &&
-    git -C /workspace/${PROJECT_NAME} checkout -b upstream/${PARENT} &&
+    ( [ -z "${EMAIL}" ] || git -C /workspace/${PROJECT_NAME} config user.email "${EMAIL}" ) &&
+    ( [ -z "${NAME}" ] || git -C /workspace/${PROJECT_NAME} config user.name "${NAME}" ) &&
+    ( [ -z "${UPSTREAM}" ] || git -C /workspace/${PROJECT_NAME} remote add upstream ${UPSTREAM} ) &&
+    ( [ -z "${ORIGIN}" ] || git -C /workspace/${PROJECT_NAME} remote add origin ${ORIGIN} ) &&
+    ( [ -z "${PARENT}" ] || git -C /workspace/${PROJECT_NAME} fetch upstream ${PARENT} && git -C /workspace/${PROJECT_NAME} checkout upstream/${PARENT}  ) &&
+    git -C /workspace/${PROJECT_NAME} checkout -b scratch/$(uuidgen) &&
     true
 EOF
     ) | volume-tee.sh ${PROJECT_VOLUME} init.sh &&
