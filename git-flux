@@ -29,6 +29,7 @@ scratch(){
         git fetch upstream develop &&
             git checkout upstream/develop &&
             scratch &&
+            git commit --allow-empty &&
             true
     }
     case ${1} in
@@ -50,7 +51,6 @@ scratch(){
         ;;
         restart)
             restart &&
-                git commit --allow-empty &&
                 true
         ;;
     esac &&
