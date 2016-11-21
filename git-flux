@@ -38,5 +38,9 @@ scratch(){
             rebase &&
                 true
         ;;
+        reset)
+            reset &&
+                true
+        ;;
     esac &&
     true
