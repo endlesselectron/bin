@@ -1,0 +1,46 @@
+#!/bin/sh
+
+scratch(){
+    git checkout -b scratch/$(uuidgen) &&
+    true
+} &&
+    check(){
+        ( [ -z "$(git clean -n -d)" ] || ( echo "The repository is not clean." && exit 64 ) ) &&
+            ( [ -z "$(git diff)" ] || ( echo "There are uncommitted changes." && exit 65 ) ) &&
+            echo "The repository is checked ready."
+            true
+    } &&
+    rebase(){
+        check &&
+            git fetch upstream develop &&
+            git scratch &&
+            git rebase upstream/develop &&
+            true
+    } &&
+    reset(){
+        check &&
+            rebase &&
+            OLD_COMMIT=$(git cherry upstream/develop | head --lines 1 | cut --fields 2 --delimiter " ") &&
+            git reset --soft upstream/develop &&
+            git commit --reuse-message ${OLD_COMMIT} &&
+            true
+    }
+    case ${1} in
+        scratch)
+            scratch &&
+                true
+        ;;
+        check)
+            check &&
+                true
+        ;;
+        rebase)
+            rebase &&
+                true
+        ;;
+        reset)
+            reset &&
+                true
+        ;;
+    esac &&
+    true
