@@ -11,8 +11,10 @@ scratch(){
             true
     } &&
     rebase(){
-        git fetch upstream develop &&
+        check &&
+            git fetch upstream develop &&
             git scratch &&
+            git rebase upstream/develop &&
             true
     } &&
     case ${1} in
