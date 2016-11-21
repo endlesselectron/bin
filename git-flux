@@ -1,0 +1,32 @@
+#!/bin/sh
+
+scratch(){
+    git checkout -b scratch/$(uuidgen) &&
+    true
+} &&
+    check(){
+        ( [ -z "$(git clean -n -d)" ] || ( echo "The repository is not clean." && exit 64 ) ) &&
+            ( [ -z "$(git diff)" ] || ( echo "There are uncommitted changes." && exit 65 ) ) &&
+            echo "The repository is checked ready."
+            true
+    } &&
+    rebase(){
+        git fetch upstream develop &&
+            git scratch &&
+            true
+    } &&
+    case ${1} in
+        scratch)
+            scratch &&
+                true
+        ;;
+        check)
+            check &&
+                true
+        ;;
+        rebase)
+            rebase &&
+                true
+        ;;
+    esac &&
+    true
